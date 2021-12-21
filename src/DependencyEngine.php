@@ -23,7 +23,7 @@ class DependencyEngine
         }
 
         $self->arguments = $self::resolveArguments($closure);
-        $self->closure   = $closure;
+        $self->closure = $closure;
 
         if ($autoRun) {
             $closure(...$self->arguments);
@@ -74,14 +74,14 @@ class DependencyEngine
     {
         $class = self::resovleClass($argument);
 
-        return !class_exists($class);
+        return ! class_exists($class);
     }
 
     protected static function verifyArgumentIsInstanceOf(ReflectionParameter $argument, string $instance): void
     {
         $type = self::resovleClass($argument);
 
-        if (!is_a($type, $instance, true)) {
+        if (! is_a($type, $instance, true)) {
             throw new RuntimeException("Arguments are required to be instances of {$instance}");
         }
     }
