@@ -1,17 +1,17 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "elliottlawson/laravel-closure-dependency-injector",
+    "description": "A flexible closure dependency injector",
     "keywords": [
-        ":vendor_name",
+        "elliottlawson",
         "laravel",
-        ":package_slug"
+        "laravel-closure-dependency-injector"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/elliottlawson/laravel-closure-dependency-injector",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Elliott Lawson",
+            "email": "elliott.lawson@outlook.com",
             "role": "Developer"
         }
     ],
@@ -34,13 +34,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Elliottlawson\\LaravelClosureDependencyInjector\\": "src",
+            "Elliottlawson\\LaravelClosureDependencyInjector\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Elliottlawson\\LaravelClosureDependencyInjector\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -54,10 +54,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Elliottlawson\\LaravelClosureDependencyInjector\\LaravelClosureDependencyInjectorServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "LaravelClosureDependencyInjector": "Elliottlawson\\LaravelClosureDependencyInjector\\Facades\\LaravelClosureDependencyInjector"
             }
         }
     },

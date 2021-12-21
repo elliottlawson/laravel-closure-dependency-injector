@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Elliottlawson\LaravelClosureDependencyInjector\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelClosureDependencyInjectorCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-closure-dependency-injector';
 
     public $description = 'My command';
 
