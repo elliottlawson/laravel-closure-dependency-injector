@@ -5,15 +5,10 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/elliottlawson/laravel-closure-dependency-injector/Check%20&%20fix%20styling?label=code%20style)](https://github.com/elliottlawson/laravel-closure-dependency-injector/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/elliottlawson/laravel-closure-dependency-injector.svg?style=flat-square)](https://packagist.org/packages/elliottlawson/laravel-closure-dependency-injector)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This is a flexible (and highly extensible) simple (non-recursive) dependency injector for closures.
 
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-closure-dependency-injector.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-closure-dependency-injector)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+- The engine will loop over all arguments passed to the closure, attempt to instantiate them and inject them back in.
+- The process is not recursive (sub-dependencies are not instantiated)
 
 ## Installation
 
@@ -23,36 +18,24 @@ You can install the package via composer:
 composer require elliottlawson/laravel-closure-dependency-injector
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-closure-dependency-injector-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-```bash
-php artisan vendor:publish --tag="laravel-closure-dependency-injector-config"
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-closure-dependency-injector-views"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
 ## Usage
 
 ```php
-$laravel-closure-dependency-injector = new Elliottlawson\LaravelClosureDependencyInjector();
-echo $laravel-closure-dependency-injector->echoPhrase('Hello, Elliottlawson!');
+use Elliottlawson\LaravelClosureDependencyInjector\DependencyEngine;
+
+class Writer
+{
+    public function output(string $message): string
+    {
+        return echo $message;
+    }
+}
+
+DependencyEngine::handle(function (Writer $writer) {
+    $writer->output('hello world');
+})
+
+// hello world
 ```
 
 ## Testing
