@@ -2,9 +2,9 @@
 
 namespace Elliottlawson\LaravelClosureDependencyInjector\Tests;
 
+use Elliottlawson\LaravelClosureDependencyInjector\LaravelClosureDependencyInjectorServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Elliottlawson\LaravelClosureDependencyInjector\LaravelClosureDependencyInjectorServiceProvider;
 
 class TestCase extends Orchestra
 {

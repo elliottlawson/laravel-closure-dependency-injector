@@ -2,9 +2,9 @@
 
 namespace Elliottlawson\LaravelClosureDependencyInjector;
 
+use Elliottlawson\LaravelClosureDependencyInjector\Commands\LaravelClosureDependencyInjectorCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Elliottlawson\LaravelClosureDependencyInjector\Commands\LaravelClosureDependencyInjectorCommand;
 
 class LaravelClosureDependencyInjectorServiceProvider extends PackageServiceProvider
 {
