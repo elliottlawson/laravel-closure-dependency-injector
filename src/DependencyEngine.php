@@ -3,6 +3,7 @@
 namespace Elliottlawson\LaravelClosureDependencyInjector;
 
 use Closure;
+use Illuminate\Support\Arr;
 use ReflectionFunction;
 use ReflectionParameter;
 use ReflectionType;
@@ -91,7 +92,7 @@ class DependencyEngine
         $class = self::resovleClass($argument);
 
         if ($parameter) {
-            return new $class($parameter);
+            return new $class(...Arr::wrap($parameter));
         }
 
         return new $class();
