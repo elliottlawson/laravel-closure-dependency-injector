@@ -8,8 +8,7 @@ use Elliottlawson\LaravelClosureDependencyInjector\Tests\Helpers\DependentDepend
 use Elliottlawson\LaravelClosureDependencyInjector\Tests\Helpers\StandAloneDependency;
 
 it('can resolve dependencies', function () {
-    $closure = function (DependencyOne $one, DependencyTwo $two) {
-    };
+    $closure = function (DependencyOne $one, DependencyTwo $two) {};
 
     $arguments = DependencyEngine::resolveArguments($closure);
 
@@ -27,19 +26,16 @@ it('can resolve dependencies', function () {
 });
 
 it('throws an exception for non type hinted arguments', function () {
-    DependencyEngine::resolveArguments(function (DependencyOne $one, $two) {
-    });
+    DependencyEngine::resolveArguments(function (DependencyOne $one, $two) {});
 })->throws(RuntimeException::class, 'Arguments must be type hinted');
 
 it('throws_an_exceptions_for_non_instantiable_arguments', function () {
-    DependencyEngine::resolveArguments(function (DependencyOne $one, string $string = 'Kids, don\'t try this at home') {
-    });
+    DependencyEngine::resolveArguments(function (DependencyOne $one, string $string = 'Kids, don\'t try this at home') {});
 })->throws(RuntimeException::class, 'Argument is not instantiable. Variables should be passed via use');
 
 it('can constrain_dependencies instances and throw and exception', function () {
     DependencyEngine::resolveArguments(
-        function (DependencyOne $one, StandAloneDependency $standAlone) {
-        },
+        function (DependencyOne $one, StandAloneDependency $standAlone) {},
         AbstractDependency::class,
     );
 })->throws(RuntimeException::class, 'Arguments are required to be instances of Elliottlawson\LaravelClosureDependencyInjector\Tests\Helpers\AbstractDependency');
@@ -82,8 +78,7 @@ it('can pass a parameter to the dependencies', function () {
     $sub_dependency = new StandAloneDependency();
 
     $arguments = DependencyEngine::resolveArguments(
-        function (DependentDependency $dependency) {
-        },
+        function (DependentDependency $dependency) {},
         null, // no specific instance constraint
         $sub_dependency,
     );

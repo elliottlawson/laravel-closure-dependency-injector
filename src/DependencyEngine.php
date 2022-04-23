@@ -6,8 +6,6 @@ use Closure;
 use Illuminate\Support\Arr;
 use ReflectionFunction;
 use ReflectionParameter;
-use ReflectionType;
-use RuntimeException;
 
 class DependencyEngine
 {
@@ -49,15 +47,11 @@ class DependencyEngine
             ->toArray();
     }
 
-    public static function resolveArgument(ReflectionParameter $argument, ?string $instance = null, mixed $parameter): mixed
+    public static function resolveArgument(ReflectionParameter $argument, ?string $instance = null, mixed $parameter = null): object
     {
-        if (static::notTypeHinted($argument)) {
-            throw new RuntimeException('Arguments must be type hinted');
-        }
+        throw_if(static::notTypeHinted($argument), 'Arguments must be type hinted');
 
-        if (static::isNotInstantiable($argument)) {
-            throw new RuntimeException('Argument is not instantiable. Variables should be passed via use');
-        }
+        throw_if(static::isNotInstantiable($argument), 'Argument is not instantiable. Variables should be passed via use');
 
         if ($instance) {
             static::verifyArgumentIsInstanceOf($argument, $instance);
@@ -68,28 +62,26 @@ class DependencyEngine
 
     protected static function notTypeHinted(ReflectionParameter $argument): bool
     {
-        return ! $argument->hasType();
+        return $argument->hasType() === false;
     }
 
     protected static function isNotInstantiable(ReflectionParameter $argument): bool
     {
-        $class = self::resovleClass($argument);
+        $class = self::resolveClass($argument);
 
-        return ! class_exists($class);
+        return class_exists($class) === false;
     }
 
     protected static function verifyArgumentIsInstanceOf(ReflectionParameter $argument, string $instance): void
     {
-        $type = self::resovleClass($argument);
+        $type = self::resolveClass($argument);
 
-        if (! is_a($type, $instance, true)) {
-            throw new RuntimeException("Arguments are required to be instances of {$instance}");
-        }
+        throw_if(is_a($type, $instance, true) === false, "Arguments are required to be instances of {$instance}");
     }
 
     protected static function instantiate(ReflectionParameter $argument, mixed $parameter = null): object
     {
-        $class = self::resovleClass($argument);
+        $class = self::resolveClass($argument);
 
         if ($parameter) {
             return new $class(...Arr::wrap($parameter));
@@ -98,11 +90,8 @@ class DependencyEngine
         return new $class();
     }
 
-    protected static function resovleClass(ReflectionParameter $argument): string
+    protected static function resolveClass(ReflectionParameter $argument): string
     {
-        /** @var ReflectionType $type */
-        $type = $argument->getType();
-
-        return $type->getName();
+        return $argument->getType()?->getName();
     }
 }
