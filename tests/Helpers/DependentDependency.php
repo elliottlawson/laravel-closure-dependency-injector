@@ -6,5 +6,6 @@ class DependentDependency
 {
     public function __construct(
         public StandAloneDependency $dependency,
-    ) {}
+    ) {
+    }
 }
