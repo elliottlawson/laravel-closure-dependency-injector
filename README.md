@@ -18,7 +18,7 @@ You can install the package via composer:
 composer require elliottlawson/laravel-closure-dependency-injector
 ```
 
-## Usage
+## Usage Examples
 
 ```php
 use Elliottlawson\LaravelClosureDependencyInjector\DependencyEngine;
@@ -31,12 +31,71 @@ class Writer
     }
 }
 
+// Immediately execute closure
 DependencyEngine::handle(function (Writer $writer) {
     $writer->output('hello world');
-})
+});
 
-// hello world
+
+// - or -
+
+
+// Execute deferred
+$engine = DependencyEngine::handle(
+    function (Writer $writer) {
+        $writer->output('hello world');
+    },
+    false,
+);
+
+$engine->runClosure();
 ```
+
+### More...
+Another way this can be used is to provide a cleaner interface, where more complex steps can be hidden behind the scenes
+
+Say you had some configs you wanted to set in a single streamlined step...
+```php
+$user = User::first();
+
+$user->updateConfigs(function(ConfigOne $one, ConfigTwo $two) {
+    $one = 'Hello';
+    $two = ['one', 'two', 'three'];
+});
+```
+<br/>
+
+This type of functionality could be enabled by manually setting up the injection process
+```php
+use Elliottlawson\LaravelClosureDependencyInjector\DependencyEngine;
+
+trait ConfigHelper
+{
+    public function updateConfigs(Closure $callback): static
+    {
+        // Resolve instances for each of the callback's dependencies
+        $arguments = DependencyEngine::resolveArguments(
+            callback: $callback,
+            instance: ConfigBase::class,
+            parameter: $this,
+        );
+        
+        // Run the closure
+        $callback(...$arguments);
+        
+        // Perform after-the-fact operations
+        $this->persistConfigs($arguments);
+    }
+    
+    protected function persistConfigs(array $configs)
+    {
+        collect($configs)
+            ->each(fn ($config) => $config->save());
+    }
+}
+```
+
+
 
 ## Testing
 
@@ -59,7 +118,6 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## Credits
 
 - [Elliott Lawson](https://github.com/elliottlawson)
-- [All Contributors](../../contributors)
 
 ## License
 
