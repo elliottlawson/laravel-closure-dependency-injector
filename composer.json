@@ -10,9 +10,7 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Elliott Lawson",
-            "email": "elliott.lawson@outlook.com",
-            "role": "Developer"
+            "name": "Elliott Lawson"
         }
     ],
     "require": {
